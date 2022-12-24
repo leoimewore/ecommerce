@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React from 'react';
+import commerce from './lib/commerce';
 import './App.css';
+import Products from './components/Products';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import NewArrivals from './components/NewArrivals';
+import Favorite from "./components/Favorite"
+import Cart from "./components/Cart"
+import Contact from './components/Contact';
+import { CartContext } from './Context/Cart/CartContext';
+
+const linksArray = ["Products", "Favorites", "New Arrivals", "Contact Us"]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <CartContext>
+      <BrowserRouter>
+       <Navbar links={linksArray}/>
+        <Routes>
+          <Route path="/" element={<Products />}/>
+          <Route path="products" element={<Products />}/>
+          <Route path="newarrivals" element={<NewArrivals />} />
+          <Route path="favorites" element={<Favorite />} />
+          <Route path="contactus" element={<Contact />} />
+          <Route path="cart" element={<Cart/>}/>
+        </Routes>
+      </BrowserRouter>
+   </CartContext>
+
   );
 }
 
