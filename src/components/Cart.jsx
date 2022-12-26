@@ -1,154 +1,110 @@
 import React from 'react'
-import {Grid,Box,Divider,Avatar,Typography,IconButton, CssBaseline, Button,TextField}from "@mui/material"
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import {Box, Typography,Paper,Button,Avatar,Divider,Container,IconButton} from '@mui/material'
 import { useCartContext } from '../Context/Cart/CartContext';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { borderBottom, Container } from '@mui/system';
-import { styled } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-
-
-const StyledIconButton= styled(IconButton)(
-
-  {
-    boxShadow:"none",
-   
-   fontSize:"12px",
-   fontWeight:"bold",
-  
-   
-  }
-)
-
-const StyledButton = styled(Button)({
-  boxShadow: 'none',
-  textTransform: 'none',
-  fontSize: 16,
-  padding: '6px 12px',
-  
-  lineHeight: 1.5,
-  
-  fontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Segoe UI"',
-    'Roboto',
-    '"Helvetica Neue"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(','),
-  '&:hover': {
-    backgroundColor: 'rgba(255,0,151,0.9802631578947368)',
-  
-    boxShadow: 'none',
-  },
+const IconButtonStyles={
+  width:"40%",
+  height:"25px",
+  border:"1px solid",
+  borderRadius:0.5,
+  backgroundColor:'rgba(36,0,27,0.8574561403508771)',
+  color:"#fff",
   '&:active': {
     boxShadow: 'none',
-    backgroundColor: '#0062cc',
+    color:"black",
+    backgroundColor: 'rgba(255,0,151,0.9802631578947368)',
  
   },
   '&:focus': {
     boxShadow: '0 0 0 0.2rem rgba(121,9,94,1)',
   },
-});
+}
+
 const Cart = () => {
 
+  const {cartItems,qty,setShowCart,totalPrice,
+    removeFromCart,toggleProductQuantity}=useCartContext()
 
-
-const {cartItems,qty,setShowCart,totalPrice,
-  removeFromCart,toggleProductQuantity}=useCartContext()
-
-console.log(cartItems)
-
-
+    const showLayout=useMediaQuery("(min-width:600px)")
   return (
-  
 <>
-<Typography variant='h4' marginTop={"20px"} marginBottom={"20px"} color={"rgba(36,0,27,0.8574561403508771)"} paddingLeft={"20px"}>Shopping Cart</Typography>
-
-<Box>
-<Divider/>
-  {(cartItems.length===0)?<Typography variant='h4' marginTop={"2em"}>Your Shopping Cart is empty</Typography> : cartItems.map((item,index)=><Box display={"flex"} alignItems={"center"} key={index} justifyContent={"space-between"}
-  marginTop={"50px"} width={"80%"} marginLeft={"auto"} marginRight={"auto"} padding={"2px"}>
+<Box display="flex" justifyContent={"center"} marginTop={"20px"} marginBottom={"20px"}>
+  <Typography variant="h4">Shopping Cart</Typography>
   
+</Box>
+   <Container maxWidth="md" sx={{border:"0.01px solid grey",borderRadius:"4px",boxShadow: "0px 2px 0.5px gray"}}>
+     {cartItems.map((item)=><Container maxWidth="md"
+     sx={{display:"flex",justifyContent:"center",
+     alignItems:"center",padding:'25px'}}>
+      {<Container maxWidth="md" sx={{display:"flex",borderBottom:"1px solid", flexDirection:(showLayout)?"row":"column",boxShadow: "0px 1px 0.5px gray"}}>
+        <Box display={"flex"} padding={"15px"}>
+        <Avatar
+          alt="productname"
+          sx={{width:50,height:50,marginRight:"10px"}}
+          src={item.image.url}/>
+    
+          <Box display="flex" flexDirection={"column"} justifyContent="center">
+            <Typography variant="h6">{item.name}</Typography>
+            <Typography variant="subtitle2">{(item.price.formatted_with_symbol)}</Typography>
+          </Box>
+        </Box>
   
-    <Box display={"flex"} alignItems={"center"} gap={"20px"} width={'20%'}> 
-      <Avatar
-      alt="productname"
-      sx={{width:50,height:50}}
-      src={item.image.url}/>
-      <Box display={"flex"} flexDirection={"column"} gap={"5px"}>
-        <Typography variant='h6'>{item.name}</Typography>
-        <Typography variant='subtitle1'>{(item.price.formatted_with_symbol)}</Typography>
-      </Box>
-    </Box>
+        <Box display="flex" justifyContent={"space-around"} width >
+          <Box display="flex" alignItems={"center"} padding={"2px"}>
+            <IconButton 
+            aria-label="add"
+            sx={IconButtonStyles}
+            size="small"
+            onClick={()=>toggleProductQuantity(item.id,"dec")}>
+              <RemoveIcon sx={{fontSize:"18px"}}/>
+            </IconButton>
+            <Typography variant="h6" padding={"1px"}>{item.quantity}</Typography>
+            <IconButton 
+            aria-label="add"
+            sx={IconButtonStyles}
+            size="small"
+            onClick={()=>toggleProductQuantity(item.id,"inc")}
+            >
+              <AddIcon sx={{fontSize:"18px"}}/>
+            </IconButton>
+          </Box>
   
-    <Box display={"flex"} alignItems={"center"} width={"10%"}>
+          <Box display="flex" flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+          <Typography variant='h5'>Sub-Total:{`$ ${(item.price.raw * item.quantity).toFixed(2)}`}</Typography> 
+        {/* <Typography>Sub-Total:{"$599.00"}</Typography> */}
   
-    <div  style={{ display: "flex",
-       border:"2px solid",
-       alignItems: "center",
-       justifyContent:"space-between",
-       height:"100%",
-       borderRadius:"20%",
-       marginRight:"50px",
-}}>
-    <StyledIconButton
-      aria-label="minus"
-      variant="contained"
-      color='primary'
-      onClick={()=>toggleProductQuantity(item.id,"dec")}
-      >
-      <RemoveIcon fontSize="inherit" />
-    </StyledIconButton>
-   <Typography variant='h5' sx={{width:"33%",border:"1px solid",padding:"4px"}}>{item.quantity}</Typography>
-    <StyledIconButton
-     aria-label="plus"
-     color='primary'
-     onClick={()=>toggleProductQuantity(item.id,"inc")}
-     >
-      <AddIcon fontSize="inherit" />
-    </StyledIconButton>
-       </div>
+         <IconButton aria-label="add"
+            
+            size="small"
+            sx={{color:"rgba(36,0,27,0.8574561403508771)"}}
+            onClick={()=>removeFromCart(item)}>
+           <DeleteIcon/>
+          </IconButton>
+          </Box>
   
-  
-  
-    </Box>
-  
-    <Box>
-     <Typography variant='h5'>Sub-Total:{`$ ${(item.price.raw * item.quantity).toFixed(2)}`}</Typography> 
-      {/* <Typography>Sub-Total:{"$599.00"}</Typography> */}
-
-       <StyledButton aria-label='remove from cart' size="small" variant='text' onClick={()=>removeFromCart(item)}>
-         Remove
-        </StyledButton>
+    
+        </Box>
+       
+    
+      </Container>}
+   
       
-    </Box>
-  
-  
-  
-  
-  
-  
-  
-  
-  </Box>)}
-  <Divider/>
-</Box>
+    
+     </Container>)}
+   
+   </Container>
 
-<Box marginTop={"2em"} display={"flex"} flexDirection={"row-reverse"} padding={"7em"}>
-  <Typography variant='h4' color={"primary"} >Total:{`$ ${(totalPrice).toFixed(2)}`}</Typography>
-</Box>
-
-
+   <Container maxWidth="md" sx={{display:"flex",justifyContent:'flex-end',marginTop:"20px"}}>
+  <Typography variant="h4">Total:{`$ ${(totalPrice).toFixed(2)}`}</Typography>
+</Container>
 </>
-
   )
 }
+
+
 
 export default Cart

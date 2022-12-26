@@ -58,7 +58,7 @@ const Navbar = ({ links }) => {
                 </Grid>}
 
                 <IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
-                <StyledBadge badgeContent={numberOfItems} color="secondary">
+                <StyledBadge badgeContent={numberOfItems} color="primary" >
                 <ShoppingCartRoundedIcon />
                 </StyledBadge>
                 </IconButton>

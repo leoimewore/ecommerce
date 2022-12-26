@@ -27,6 +27,11 @@ const theme= createTheme({
       color:"rgba(36,0,27,0.8574561403508771)"
      
     },
+    h4:{
+        fontWeight:700,
+        color:"rgba(36,0,27,0.8574561403508771)",
+       
+    },
   h5:{
     fontWeight:700,
     fontSize:"1rem",
