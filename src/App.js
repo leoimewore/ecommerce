@@ -10,6 +10,7 @@ import Cart from "./components/Cart"
 import Contact from './components/Contact';
 import { CartContext } from './Context/Cart/CartContext';
 
+
 const linksArray = ["Products", "Favorites", "New Arrivals", "Contact Us"]
 
 function App() {

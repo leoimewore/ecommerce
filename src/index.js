@@ -5,6 +5,10 @@ import App from './App';
 import { ThemeProvider,createTheme } from '@mui/material';
 import Navbar from './components/Navbar';
 import { CartContext } from './Context/Cart/CartContext';
+import { Auth0Provider } from '@auth0/auth0-react';
+
+const domain=process.env.REACT_APP_AUTH0_DOMAIN
+const clientId=process.env.REACT_APP_AUTH0_CLIENT_ID
 
 
 
@@ -51,7 +55,16 @@ root.render(
   <React.StrictMode>
    <ThemeProvider theme={theme}> 
  
-   <App /></ThemeProvider>
+  <Auth0Provider
+  domain={domain}
+  clientId={clientId}
+  redirectUri={window.location.origin}
+
+  > 
+    <App />
+  </Auth0Provider>
+   
+   </ThemeProvider>
   </React.StrictMode>
 );
 

@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState} from "react";
 
+
+import "react-toastify/dist/ReactToastify.css"
+
 const Context = createContext();
 
 
@@ -87,7 +90,10 @@ export const CartContext = ({ children }) => {
       localStorage.setItem(
         "cart",
         JSON.stringify([...cartItems, { ...product }])
+       
+        
       );
+     
     }
     setTotalPrice((prevTotalPrice)=>prevTotalPrice+product.price.raw*quantity)
     setTotalQuanity((prevTotalQuantities) => prevTotalQuantities + quantity)

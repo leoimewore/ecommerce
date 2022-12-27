@@ -9,6 +9,9 @@ import { Box } from '@mui/system';
 import { useState } from 'react';
 import Drawerbar from './Drawerbar';
 import { useCartContext } from '../Context/Cart/CartContext';
+import  LoginButton  from "./LoginButton"
+import Logout from './Logout';
+import Profile from './Profile';
 
 
 
@@ -49,14 +52,23 @@ const Navbar = ({ links }) => {
 
                     </Grid>
                     <Grid item xs={1} />
-                    <Grid item xs={3}>
+                    {/* <Grid item xs={3}>
                         <Box display="flex">
-                            <Button variant='contained' sx={{ marginLeft: "auto",background: "rgba(36,0,27,0.8574561403508771)",color:"white" }}>Login</Button>
-                            <Button variant='contained' sx={{ marginLeft: 1, background: "rgba(36,0,27,0.8574561403508771)",color:"white"  }}>Signup</Button>
+                            <LoginButton/>
+                            <Logout/>
+                            <Profile/>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                 </Grid>}
-
+               
+                        <Box display="flex" justifyContent={"space-between"} width={"100%"}>
+                            <LoginButton/>
+                            <Logout/>
+                            <Profile/>
+                            
+                        </Box>
+                  
+                
                 <IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
                 <StyledBadge badgeContent={numberOfItems} color="primary" >
                 <ShoppingCartRoundedIcon />
