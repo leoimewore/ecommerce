@@ -58,7 +58,7 @@ root.render(
   <Auth0Provider
   domain={domain}
   clientId={clientId}
-  redirectUri={"https://leoimewore.github.io"}
+  redirectUri={window.location.origin}
 
   > 
     <App />
