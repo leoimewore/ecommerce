@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Grid, Tabs, Tab, Button, useTheme, useMediaQuery } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Grid, Tabs, Tab, useTheme, useMediaQuery } from '@mui/material'
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
@@ -12,6 +12,7 @@ import { useCartContext } from '../Context/Cart/CartContext';
 import  LoginButton  from "./LoginButton"
 import Logout from './Logout';
 import Profile from './Profile';
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 
@@ -28,6 +29,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Navbar = ({ links }) => {
     const theme = useTheme()
     const {numberOfItems,setShowCart}=useCartContext()
+    const {isLoading,error,isAuthenticated}=useAuth0()
 
  
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
@@ -37,12 +39,12 @@ const Navbar = ({ links }) => {
         <AppBar position="static" sx={{ backgroundImage: "linear-gradient(90deg, rgba(36,0,27,0.8574561403508771) 0%, rgba(121,9,94,1) 45%, rgba(255,0,151,0.9802631578947368) 100%);" ,color:"white"}}>
             <Toolbar>
            
-                {isMatch ? <>  <Drawerbar links={links} setValue={setValue} /></>:
-                <Grid container sx={{ placeItems: "center" }}>
+                {isMatch  ? <>  {isAuthenticated &&<Drawerbar links={links} setValue={setValue} />}</>:
+                isAuthenticated &&<Grid container sx={{ placeItems: "center" }}>
                     <Grid item xs={1} >
                         
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={10}>
                         <Tabs value={value} textColor="inherit" indicatorColor='secondary' onChange={(e, val) => setValue(val)}>
                             {links.map((link, index) => (<Tab key={index} label={link} component={Link} to={`/${link.toLowerCase().replace(" ","")}`}/>))}
                            
@@ -62,9 +64,15 @@ const Navbar = ({ links }) => {
                 </Grid>}
                
                         <Box display="flex" justifyContent={"space-between"} width={"100%"}>
-                            <LoginButton/>
-                            <Logout/>
-                            <Profile/>
+                            {error && <p>Authentication Error</p>}
+                            {!error && isLoading && <p>Loading...</p>}
+                            {!error && !isLoading &&
+
+                          (<>
+                                <LoginButton/>
+                                <Logout/>
+                                <Profile/>
+                          </>)}
                             
                         </Box>
                   
