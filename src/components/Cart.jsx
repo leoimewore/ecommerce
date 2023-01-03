@@ -6,6 +6,16 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Profile from './Profile';
+import CloseIcon from "@mui/icons-material/Close";
+import styled from "@emotion/styled";
+import { Link } from "react-router-dom"
+
+
+const FlexBox = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 
 
@@ -28,89 +38,121 @@ const IconButtonStyles={
   },
 }
 
-const Cart = () => {
+
+
+
+const Cart=()=>{
 
   const {cartItems,qty,setShowCart,totalPrice,
-    removeFromCart,toggleProductQuantity}=useCartContext()
+   removeFromCart,toggleProductQuantity}=useCartContext()
 
-    const showLayout=useMediaQuery("(min-width:600px)")
+
   return (
-<>
-<Box display="flex" justifyContent={"center"} marginTop={"20px"} marginBottom={"20px"}>
-  <Typography variant="h4">Shopping Cart</Typography>
-  
-</Box>
-   
-     <Container maxWidth="md" sx={{border:"0.01px solid grey",borderRadius:"4px",boxShadow: "0px 2px 0.5px gray"}}>
-       {cartItems.map((item)=><Container maxWidth="md"
-       sx={{display:"flex",justifyContent:"center",
-       alignItems:"center",padding:'25px'}}>
-        {<Container maxWidth="md" sx={{display:"flex",borderBottom:"1px solid", flexDirection:(showLayout)?"row":"column",boxShadow: "0px 1px 0.5px gray"}}>
-          <Box display={"flex"} padding={"15px"}>
-          <Avatar
+    <Box
+      display="block"
+      backgroundColor="rgba(0, 0, 0, 0.4)"
+      position="fixed"
+      zIndex={10}
+      width="100%"
+      height="100%"
+      left="0"
+      top="0"
+      overflow="auto"
+    >
+      <Box
+        position="fixed"
+        right="0"
+        bottom="0"
+        width="max(400px, 30%)"
+        height="100%"
+        backgroundColor="white"
+      >
+        <Box padding="30px" overflow="auto" height="100%">
+          {/* HEADER */}
+          <FlexBox mb="15px">
+            <Typography variant="h5">SHOPPING CART ({cartItems.length})</Typography>
+            <IconButton 
+            onClick={()=>setShowCart(true)} component={Link} to="/products"
+            >
+              <CloseIcon />
+            </IconButton>
+          </FlexBox>
+
+          {/* CART LIST */}
+          <Box>
+            {cartItems.map((item) => (
+              <Box key={item.id}>
+                <FlexBox p="15px 0">
+                  <Box flex="1 1 40%">
+                  <Avatar
             alt="productname"
             sx={{width:50,height:50,marginRight:"10px"}}
-            src={item.image.url}/>
-      
-            <Box display="flex" flexDirection={"column"} justifyContent="center">
-              <Typography variant="h6">{item.name}</Typography>
-              <Typography variant="subtitle2">{(item.price.formatted_with_symbol)}</Typography>
-            </Box>
+           src={item.image.url}/>
+                  </Box>
+                  <Box flex="1 1 60%">
+                    <FlexBox mb="5px">
+                      <Typography fontWeight="bold" variant="subtitle1" >
+                        {item.name}
+                      </Typography>
+                      <IconButton onClick={()=>removeFromCart(item)}>
+                        <CloseIcon />
+                      </IconButton>
+                    </FlexBox>
+                    <Typography>{item.attributes.shortDescription}</Typography>
+                    <FlexBox m="15px 0">
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        border={"1.5px solid #cfcdcd"}
+                      >
+                        <IconButton
+                         onClick={()=>toggleProductQuantity(item.id,"dec")} 
+                        >
+                          <RemoveIcon />
+                        </IconButton>
+                        <Typography variant='body1'>{item.quantity}</Typography>
+                        <IconButton
+                         onClick={()=>toggleProductQuantity(item.id,"inc")}
+                        >
+                          <AddIcon />
+                        </IconButton>
+                      </Box>
+                      <Typography fontWeight="bold" variant='h5'>
+                        ${(item.price.raw).toFixed(2)}
+                      </Typography>
+                    </FlexBox>
+                  </Box>
+                </FlexBox>
+                <Divider />
+              </Box>
+            ))}
           </Box>
-    
-          <Box display="flex" justifyContent={"space-around"} width >
-            <Box display="flex" alignItems={"center"} padding={"2px"}>
-              <IconButton 
-              aria-label="add"
-              sx={IconButtonStyles}
-              size="small"
-              onClick={()=>toggleProductQuantity(item.id,"dec")}>
-                <RemoveIcon sx={{fontSize:"18px"}}/>
-              </IconButton>
-              <Typography variant="h6" padding={"1px"}>{item.quantity}</Typography>
-              <IconButton 
-              aria-label="add"
-              sx={IconButtonStyles}
-              size="small"
-              onClick={()=>toggleProductQuantity(item.id,"inc")}
-              >
-                <AddIcon sx={{fontSize:"18px"}}/>
-              </IconButton>
-            </Box>
-    
-            <Box display="flex" flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Typography variant='h5'>Sub-Total:{`$ ${(item.price.raw * item.quantity).toFixed(2)}`}</Typography> 
-          {/* <Typography>Sub-Total:{"$599.00"}</Typography> */}
-    
-           <IconButton aria-label="add"
-              
-              size="small"
-              sx={{color:"rgba(36,0,27,0.8574561403508771)"}}
-              onClick={()=>removeFromCart(item)}>
-             <DeleteIcon/>
-            </IconButton>
-            </Box>
-    
-      
-          </Box>
-         
-      
-        </Container>}
-     
-        
-      
-       </Container>)}
-     
-     </Container>
- 
-  
 
-   <Container maxWidth="md" sx={{display:"flex",justifyContent:'flex-end',marginTop:"20px"}}>
-  <Typography variant="h4">Total:{`$ ${(totalPrice).toFixed(2)}`}</Typography>
-</Container>
-</>
-  )
-}
+          {/* ACTIONS */}
+          <Box m="20px 0">
+            <FlexBox m="20px 0">
+              <Typography variant="h5" fontWeight="bold">SUBTOTAL</Typography>
+              <Typography variant="h5" fontWeight="bold">${(totalPrice).toFixed(2)}</Typography>
+            </FlexBox>
+            <Button
+              sx={{
+                backgroundColor:"#d9d7d7",
+                color: "white",
+                borderRadius: 0,
+                minWidth: "100%",
+                padding: "20px 40px",
+                m: "20px 0",
+              }}
+            >
+              CHECKOUT
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
 
 
 

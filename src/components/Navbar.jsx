@@ -39,8 +39,8 @@ const Navbar = ({ links }) => {
         <AppBar position="static" sx={{ backgroundImage: "linear-gradient(90deg, rgba(36,0,27,0.8574561403508771) 0%, rgba(121,9,94,1) 45%, rgba(255,0,151,0.9802631578947368) 100%);" ,color:"white"}}>
             <Toolbar>
            
-                {isMatch  ? <>  {isAuthenticated &&<Drawerbar links={links} setValue={setValue} />}</>:
-                isAuthenticated &&<Grid container sx={{ placeItems: "center" }}>
+                {isMatch  ? <>  {<Drawerbar links={links} setValue={setValue} />}</>:
+                <Grid container sx={{ placeItems: "center" }}>
                     <Grid item xs={1} >
                         
                     </Grid>
@@ -77,11 +77,11 @@ const Navbar = ({ links }) => {
                         </Box>
                   
                 
-                <IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
+                {isAuthenticated &&<IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
                 <StyledBadge badgeContent={numberOfItems} color="primary" >
                 <ShoppingCartRoundedIcon />
                 </StyledBadge>
-                </IconButton>
+                </IconButton>}
 
                
               

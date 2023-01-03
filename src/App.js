@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import { CartContext } from './Context/Cart/CartContext';
 import Homepage from "./components/Homepage"
 import { useAuth0 } from '@auth0/auth0-react'
+import Welcomepage from './components/Welcomepage';
 
 
 const linksArray = ["Products", "Favorites", "New Arrivals", "Contact Us"]
@@ -21,7 +22,8 @@ function App() {
       <BrowserRouter>
        <Navbar links={linksArray}/>
         <Routes>
-          <Route path="/" element={<Homepage/>}/>
+          <Route path="ecommerce" element={<Products/>}/>
+          <Route path="/" element={<Welcomepage/>}/>
           <Route path="products" element={<Products />}/>
           <Route path="newarrivals" element={<NewArrivals />} />
           <Route path="favorites" element={<Favorite />} />

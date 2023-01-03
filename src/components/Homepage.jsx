@@ -9,9 +9,11 @@ const Homepage = () => {
 
 
   return (
-   !isAuthenticated?<Box display={"flex"} justifyContent={"center"}>
-    <Typography variant="h4">Welcome to my Shopping store, kindly login to make purchases</Typography>
-   </Box>:<Typography variant='h1'> Welcome {user?.given_name}</Typography>
+  <>
+     {<Box display={"flex"} justifyContent={"center"}>
+      <Typography variant="h4">Welcome to my Shopping store, kindly login to make purchases</Typography>
+     </Box>}
+  </>
   )
 }
 

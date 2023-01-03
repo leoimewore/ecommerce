@@ -72,11 +72,11 @@ export const CartContext = ({ children }) => {
             const newQty = item.quantity + quantity;
             return {
               ...item,
-              quantity: newQty,
+              
             };
           } else {
             return {
-              ...item,
+              ...item,quantity: quantity,
             };
           }
         })

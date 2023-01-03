@@ -53,18 +53,21 @@ const theme= createTheme({
 })
 root.render(
   <React.StrictMode>
-   <ThemeProvider theme={theme}> 
- 
-  <Auth0Provider
+
+<Auth0Provider
   domain={domain}
   clientId={clientId}
   redirectUri={window.location.origin}
 
-  > 
+  >
+   <ThemeProvider theme={theme}> 
+ 
+  
     <App />
-  </Auth0Provider>
+  
    
    </ThemeProvider>
+   </Auth0Provider>
   </React.StrictMode>
 );
 
