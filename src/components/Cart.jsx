@@ -136,13 +136,15 @@ const Cart=()=>{
             </FlexBox>
             <Button
               sx={{
-                backgroundColor:"#d9d7d7",
+                backgroundColor:"rgba(36,0,27,0.8574561403508771) ",
                 color: "white",
                 borderRadius: 0,
                 minWidth: "100%",
                 padding: "20px 40px",
                 m: "20px 0",
               }}
+              
+              component={Link} to="/checkout"
             >
               CHECKOUT
             </Button>

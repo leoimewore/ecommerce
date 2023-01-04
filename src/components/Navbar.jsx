@@ -64,20 +64,17 @@ const Navbar = ({ links }) => {
                 </Grid>}
                
                         <Box display="flex" justifyContent={"space-between"} width={"100%"}>
-                            {error && <p>Authentication Error</p>}
-                            {!error && isLoading && <p>Loading...</p>}
-                            {!error && !isLoading &&
-
-                          (<>
+                          
+                          <>
                                 <LoginButton/>
                                 <Logout/>
-                                <Profile/>
-                          </>)}
+                                {/* <Profile/> */}
+                          </>
                             
                         </Box>
                   
                 
-                {isAuthenticated &&<IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
+                {<IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
                 <StyledBadge badgeContent={numberOfItems} color="primary" >
                 <ShoppingCartRoundedIcon />
                 </StyledBadge>

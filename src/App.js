@@ -11,6 +11,7 @@ import { CartContext } from './Context/Cart/CartContext';
 import Homepage from "./components/Homepage"
 import { useAuth0 } from '@auth0/auth0-react'
 import Welcomepage from './components/Welcomepage';
+import Address from './components/Address';
 
 
 const linksArray = ["Products", "Favorites", "New Arrivals", "Contact Us"]
@@ -29,6 +30,7 @@ function App() {
           <Route path="favorites" element={<Favorite />} />
           <Route path="contactus" element={<Contact />} />
           <Route path="cart" element={<Cart/>}/>
+          <Route path="checkout" element={<Address/>}/>
         </Routes>
       </BrowserRouter>
    </CartContext>
