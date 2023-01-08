@@ -1,11 +1,8 @@
 import React from 'react'
-import {Box, Typography,Paper,Button,Avatar,Divider,Container,IconButton} from '@mui/material'
+import {Box, Typography,Paper,Button,Avatar,Divider,IconButton} from '@mui/material'
 import { useCartContext } from '../Context/Cart/CartContext';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Profile from './Profile';
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom"
@@ -20,31 +17,37 @@ const FlexBox = styled(Box)`
 
 
 
-const IconButtonStyles={
-  width:"40%",
-  height:"25px",
-  border:"1px solid",
-  borderRadius:0.5,
-  backgroundColor:'rgba(36,0,27,0.8574561403508771)',
-  color:"#fff",
-  '&:active': {
-    boxShadow: 'none',
-    color:"black",
-    backgroundColor: 'rgba(255,0,151,0.9802631578947368)',
+// const IconButtonStyles={
+//   width:"40%",
+//   height:"25px",
+//   border:"1px solid",
+//   borderRadius:0.5,
+//   backgroundColor:'rgba(36,0,27,0.8574561403508771)',
+//   color:"#fff",
+//   '&:active': {
+//     boxShadow: 'none',
+//     color:"black",
+//     backgroundColor: 'rgba(255,0,151,0.9802631578947368)',
  
-  },
-  '&:focus': {
-    boxShadow: '0 0 0 0.2rem rgba(121,9,94,1)',
-  },
-}
+//   },
+//   '&:focus': {
+//     boxShadow: '0 0 0 0.2rem rgba(121,9,94,1)',
+//   },
+// }
 
 
 
 
-const Cart=()=>{
+const Cart=({cartItems,removeFromCart,updateQty})=>{
 
-  const {cartItems,qty,setShowCart,totalPrice,
-   removeFromCart,toggleProductQuantity}=useCartContext()
+
+  
+
+
+  console.log(cartItems)
+
+  const {qty,setShowCart,totalPrice,
+   toggleProductQuantity}=useCartContext()
 
 
   return (
@@ -70,7 +73,7 @@ const Cart=()=>{
         <Box padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
           <FlexBox mb="15px">
-            <Typography variant="h5">SHOPPING CART ({cartItems.length})</Typography>
+            <Typography variant="h5">SHOPPING CART ({cartItems.line_items.length})</Typography>
             <IconButton 
             onClick={()=>setShowCart(true)} component={Link} to="/products"
             >
@@ -80,7 +83,7 @@ const Cart=()=>{
 
           {/* CART LIST */}
           <Box>
-            {cartItems.map((item) => (
+            {cartItems.line_items.map((item) => (
               <Box key={item.id}>
                 <FlexBox p="15px 0">
                   <Box flex="1 1 40%">
@@ -94,11 +97,11 @@ const Cart=()=>{
                       <Typography fontWeight="bold" variant="subtitle1" >
                         {item.name}
                       </Typography>
-                      <IconButton onClick={()=>removeFromCart(item)}>
+                      <IconButton onClick={()=>removeFromCart(item.id)}>
                         <CloseIcon />
                       </IconButton>
                     </FlexBox>
-                    <Typography>{item.attributes.shortDescription}</Typography>
+                    {/* <Typography>{item.attributes.shortDescription}</Typography> */}
                     <FlexBox m="15px 0">
                       <Box
                         display="flex"
@@ -106,13 +109,13 @@ const Cart=()=>{
                         border={"1.5px solid #cfcdcd"}
                       >
                         <IconButton
-                         onClick={()=>toggleProductQuantity(item.id,"dec")} 
+                         onClick={()=>updateQty(item.id,item.quantity-1)} 
                         >
                           <RemoveIcon />
                         </IconButton>
                         <Typography variant='body1'>{item.quantity}</Typography>
                         <IconButton
-                         onClick={()=>toggleProductQuantity(item.id,"inc")}
+                         onClick={()=>updateQty(item.id,item.quantity+1)}
                         >
                           <AddIcon />
                         </IconButton>
@@ -132,9 +135,9 @@ const Cart=()=>{
           <Box m="20px 0">
             <FlexBox m="20px 0">
               <Typography variant="h5" fontWeight="bold">SUBTOTAL</Typography>
-              <Typography variant="h5" fontWeight="bold">${(totalPrice).toFixed(2)}</Typography>
+              <Typography variant="h5" fontWeight="bold">${(cartItems.subtotal.raw).toFixed(2)}</Typography>
             </FlexBox>
-            <Button
+            {cartItems.line_items.length>0 &&<Button
               sx={{
                 backgroundColor:"rgba(36,0,27,0.8574561403508771) ",
                 color: "white",
@@ -147,7 +150,7 @@ const Cart=()=>{
               component={Link} to="/checkout"
             >
               CHECKOUT
-            </Button>
+            </Button>}
           </Box>
         </Box>
       </Box>

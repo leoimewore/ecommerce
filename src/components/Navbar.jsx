@@ -11,8 +11,8 @@ import Drawerbar from './Drawerbar';
 import { useCartContext } from '../Context/Cart/CartContext';
 import  LoginButton  from "./LoginButton"
 import Logout from './Logout';
-import Profile from './Profile';
-import { useAuth0 } from '@auth0/auth0-react'
+
+
 
 
 
@@ -26,10 +26,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   }));
 
 
-const Navbar = ({ links }) => {
+const Navbar = ({ links,totalItems }) => {
     const theme = useTheme()
-    const {numberOfItems,setShowCart}=useCartContext()
-    const {isLoading,error,isAuthenticated}=useAuth0()
+    const {numberOfItems,setShowCart,cartItems}=useCartContext()
+   
 
  
     const isMatch = useMediaQuery(theme.breakpoints.down("md"))
@@ -75,7 +75,7 @@ const Navbar = ({ links }) => {
                   
                 
                 {<IconButton sx={{color:'white'}} onClick={()=>setShowCart(true)} component={Link} to="/cart">
-                <StyledBadge badgeContent={numberOfItems} color="primary" >
+                <StyledBadge badgeContent={totalItems} color="primary" >
                 <ShoppingCartRoundedIcon />
                 </StyledBadge>
                 </IconButton>}

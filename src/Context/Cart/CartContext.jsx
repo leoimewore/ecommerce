@@ -33,7 +33,7 @@ export const CartContext = ({ children }) => {
     
             console.log(updatedFavoriteCartItem)
             setFavorite(updatedFavoriteCartItem)
-            localStorage.setItem("favorites", JSON.stringify(updatedFavoriteCartItem));
+            // localStorage.setItem("favorites", JSON.stringify(updatedFavoriteCartItem));
             setFav(false)
             
           
@@ -41,25 +41,25 @@ export const CartContext = ({ children }) => {
             setFav(true)
             product.bool=true
     setFavorite([...favorite,{...product}])
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify([...newFavoriteItem, { ...product }])
-      );
+    // localStorage.setItem(
+    //     "favorites",
+    //     JSON.stringify([...newFavoriteItem, { ...product }])
+    //   );
       
         }
       }
 
 
-    const removeFromCart=(product)=>{
-     const newCart=cartItems.filter((item)=>item.id!==product.id)
-     setCartItems(newCart)
+    // const removeFromCart=(product)=>{
+    //  const newCart=cartItems.filter((item)=>item.id!==product.id)
+    //  setCartItems(newCart)
 
-     setTotalPrice((prevTotalPrice)=>prevTotalPrice-(product.price.raw)*product.quantity)
-     setQty(1) 
+    //  setTotalPrice((prevTotalPrice)=>prevTotalPrice-(product.price.raw)*product.quantity)
+    //  setQty(1) 
      
 
     
-    }
+    // }
 
 
     const onAdd=(product,quantity)=>{
@@ -82,17 +82,17 @@ export const CartContext = ({ children }) => {
         })
   
   setCartItems(updatedCartItems)
-  localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+  // localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     }else{
     product.quantity=quantity
     setCartItems([...cartItems,{...product}])
 
-      localStorage.setItem(
-        "cart",
-        JSON.stringify([...cartItems, { ...product }])
+      // localStorage.setItem(
+      //   "cart",
+      //   JSON.stringify([...cartItems, { ...product }])
        
         
-      );
+      // );
      
     }
     setTotalPrice((prevTotalPrice)=>prevTotalPrice+product.price.raw*quantity)
@@ -161,7 +161,7 @@ if(value==="inc"){
                 onAdd,
                 numberOfItems,
                 setShowCart,
-                removeFromCart,
+                
                 toggleProductQuantity,
                 setQty,
                 handleFavorite,

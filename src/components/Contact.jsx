@@ -1,83 +1,51 @@
 import React from 'react'
-import { CssBaseline,Typography,Grid,Button,TextField } from '@mui/material';
+import {Typography, Card, Grid, Button, TextField, CardContent } from '@mui/material';
 
 const Contact = () => {
-  return (
-    <div >
-    <CssBaseline />
-        <Typography variant="h4" align="center" component="h1" gutterBottom>
-            {'Contact Form'.toUpperCase()}
-        </Typography>
-        <Grid container direction="column" justify="center" alignItems="center">
-            <Grid item>
-                <form
-                id="contact-form"
-               
-               
-                >
-                    <Grid item>
-                        <TextField
-                        fullWidth
-                        required
-                        id="name"
-                        label="Name"
-                        name="userName"
-                        margin="normal"
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                        fullWidth
-                        required
-                        id="email"
-                        label="Email"
-                        name="email"
-      
-                        margin="normal"
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                        fullWidth
-                        required
-                        id="message"
-                        label="Message"
-                        name="message"
-                        margin="normal"
-                       
-                     
-                        />
-                    </Grid>
-                    <Grid container direction="row" spacing={2} style={{ marginTop: 20 }}>
-                    <Grid item >
-                        <Button
-                        
-                        type="reset"
-                        variant="contained"
-                        
-                        //disabled={submitting || pristine}
-                        >
-                        RESET
-                        </Button>
-                    </Grid>
-                    <Grid item >  
-                        <Button
-                       
-                        type="submit"
-                        variant="contained"
-                        
-                        >
-                        Submit
-                        </Button>
-                    </Grid>
-                    </Grid>
-                </form>
-            </Grid>
-        </Grid>
-        
-    </div> 
-              
-);
+    return (
+
+        <div>
+            <Card style={{maxWidth:"600px",margin:"10px auto",padding:"20px 5px"}}>
+
+                <CardContent>
+                <Typography variant='h4' gutterBottom>Contact Us</Typography>
+                <Typography variant='body2' component="p" color="grey" gutterBottom> Fill up the form and our team will get back to you</Typography>
+                    <form>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField label="First Name" variant='outlined' fullWidth required />
+    
+                            </Grid>
+    
+                            <Grid item xs={12} sm={6}>
+                                <TextField label="Last Name" variant='outlined' fullWidth required />
+    
+                            </Grid>
+                            <Grid xs={12} item>
+                                <TextField type="email" label="Email" variant="outlined" fullWidth required/>
+    
+                            </Grid>
+    
+                            <Grid xs={12} item>
+                                <TextField type="number" label="Phone Number" variant="outlined" fullWidth required/>
+                            </Grid>
+    
+                            <Grid xs={12} item>
+                                <TextField label="Message" multiline rows={5} variant="outlined" fullWidth required/>
+    
+                            </Grid>
+                            <Grid xs={12} item>
+                               <Button type='submit' variant='contained' fullWidth>Submit</Button>
+    
+                            </Grid>
+    
+                        </Grid>
+                    </form>
+                </CardContent>
+            </Card>
+        </div>
+    )
+
 }
 
 
