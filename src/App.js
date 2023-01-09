@@ -107,7 +107,9 @@ setLoading(false)
           cart={cart} 
           order={order}
           onCapture={handleCaptureCheckout}
-          error={errorMessage}/>}/>
+          error={errorMessage}
+          loading={loading}
+          setLoading={setLoading}/>}/>
           <Route path="payment" element={<Payment/>}/>
         </Routes>
       </BrowserRouter>

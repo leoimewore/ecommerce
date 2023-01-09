@@ -91,8 +91,8 @@ const Payment = ({checkoutToken,backStep,customerdata,onCapture,nextStep,activeS
             )}
           </ElementsConsumer>
                 </Elements>
-            </>:<Box>
-                <Typography variant='h4' >
+            </>:<Box display={"flex"} marginTop={"2em"}>
+                <Typography variant='h5' gutterBottom >
                     Thank you {customerdata.firstName} {customerdata.lastName}.
                 Your Order has been completed and you will get a confirmation email at {customerdata.email}!!
                 </Typography></Box>}
